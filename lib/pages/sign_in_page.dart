@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:trialapp/pages/sign_up_page.dart';
 import 'package:trialapp/pages/user_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignInPage extends StatefulWidget {
   static const String id = 'sign_in_page';
@@ -14,6 +16,10 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  final _auth = FirebaseAuth.instance;
+  late String email;
+  late String password;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -29,7 +35,8 @@ class _SignInPageState extends State<SignInPage> {
           elevation: 0,
         ),
         body: Padding(
-          padding: const EdgeInsets.only(left: 12, right: 12, top: 15,bottom: 0),
+          padding:
+              const EdgeInsets.only(left: 12, right: 12, top: 15, bottom: 0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -42,12 +49,10 @@ class _SignInPageState extends State<SignInPage> {
                 },
                 child: Container(
                   child: const Center(
-                    child: Text(
-                      "Log In Using Google",
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w800,
-                          color: Colors.white),
+                    child: Icon(
+                      LineIcons.googlePlus,
+                      size: 40,
+                      color: Colors.white,
                     ),
                   ),
                   height: 45,
@@ -64,8 +69,12 @@ class _SignInPageState extends State<SignInPage> {
               ),
 
               /// EMAIL TEXT FIELD
-              const TextField(
-                decoration: InputDecoration(
+              TextField(
+                keyboardType: TextInputType.emailAddress,
+                onChanged: (value) {
+                  email = value;
+                },
+                decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.alternate_email_outlined),
                   hintText: "Email ID",
                   border: OutlineInputBorder(
@@ -82,9 +91,12 @@ class _SignInPageState extends State<SignInPage> {
               ),
 
               /// PASSWORD TEXT FIELD
-              const TextField(
+              TextField(
+                onChanged: (value) {
+                  password = value;
+                },
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.lock_rounded),
                   hintText: "Password",
                   border: OutlineInputBorder(
@@ -111,9 +123,17 @@ class _SignInPageState extends State<SignInPage> {
               ),
 
               /// LOG IN BUTTON STARTS HERE
-              MaterialButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, UserScreen.id);
+              GestureDetector(
+                onTap: () async {
+                  try {
+                    final user = _auth.createUserWithEmailAndPassword(
+                        email: email, password: password);
+                    if (user != null) {
+                      Navigator.pushNamed(context, UserScreen.id);
+                    }
+                  } catch (e) {
+                    print(e);
+                  }
                 },
                 child: Container(
                   child: const Center(
