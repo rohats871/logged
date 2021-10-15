@@ -20,11 +20,35 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+    late String initPage;
+  final FirebaseAuth auth=FirebaseAuth.instance;
+    late User currentUser;
+  @override
+  void initState() {
+    super.initState();
+    try {
+      currentUser = auth.currentUser!;
+      if(currentUser!=null){
+        initPage=UserScreen.id;
+        /*
+      here id is static variable which declare as a page name.
+       */
+      }
+      else{
+        initPage=SignInPage.id;
+      }
+    }
+    catch(e){
+      print(e);
+      initPage=SignUpPage.id;
+    }
+
+  }
   @override
   Widget build(BuildContext context) {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
-    initialRoute: SignInPage.id,
+    initialRoute: initPage,
       routes: {
         SignInPage.id: (context)=> const SignInPage(),
         SignUpPage.id: (context)=> SignUpPage(),

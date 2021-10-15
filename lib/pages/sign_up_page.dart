@@ -80,24 +80,7 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
 
               ///confirm password
-              // TextField(
-              //   onChanged: (value) {
-              //     password = value;
-              //   },
-              //   obscureText: true,
-              //   decoration: const InputDecoration(
-              //     prefixIcon: Icon(Icons.lock_rounded),
-              //     hintText: "Confirm Password",
-              //     border: OutlineInputBorder(
-              //       borderRadius: BorderRadius.all(
-              //         Radius.circular(30),
-              //       ),
-              //       borderSide:
-              //           BorderSide(color: Colors.amberAccent, width: 20),
-              //     ),
-              //   ),
-              // ),
-              const SizedBox(
+             SizedBox(
                 height: 20,
               ),
               const Spacer(),

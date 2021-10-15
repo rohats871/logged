@@ -126,7 +126,7 @@ class _SignInPageState extends State<SignInPage> {
               GestureDetector(
                 onTap: () async {
                   try {
-                    final user = _auth.createUserWithEmailAndPassword(
+                    final user = _auth.signInWithEmailAndPassword(
                         email: email, password: password);
                     if (user != null) {
                       Navigator.pushNamed(context, UserScreen.id);
