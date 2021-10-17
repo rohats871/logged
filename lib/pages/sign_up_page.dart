@@ -14,8 +14,8 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final _auth = FirebaseAuth.instance;
-  late String email;
-  late String password;
+    late String email;
+     late String password;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,7 @@ class _SignUpPageState extends State<SignUpPage> {
               /// PASSWORD TEXT FIELD
               TextField(
                 onChanged: (value) {
-                  email = value;
+                  password = value;
                 },
                 obscureText: true,
                 decoration: const InputDecoration(
@@ -80,7 +80,7 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
 
               ///confirm password
-             SizedBox(
+             const SizedBox(
                 height: 20,
               ),
               const Spacer(),
